@@ -1,6 +1,6 @@
 # Solo-Leveling With Nextjs 
 
-> Imagine you have being summoned this world as a player with system support to allow you to level up and power up. As you grow by defeating enemies, you receive extraordinary rewards and player stats update. This is a tale for any commoner to rise to become the world strongest!
+> Imagine you are being summoned to this world as a player with system support to allow you to level up and power up. As you grow by defeating enemies, you receive extraordinary rewards and player stats update. This is a tale for any commoner to rise to become the world strongest!
 
 A fan-made NextJS project to showcase the leveling system notification in Solo-Leveling manhwa using framer motion. The notification system might not look like what we see in the manhwa due to lack of design resources. 
 
