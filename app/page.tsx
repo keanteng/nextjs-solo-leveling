@@ -1,95 +1,139 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
 
-export default function Home() {
+// package imports
+import { useEffect, useState } from 'react';
+import { color, motion, useAnimation } from 'framer-motion';
+import styles from './page.module.css';
+import Link from 'next/link';
+
+const WindowsLoader = () => {
+  // set progress at 0
+  const [progress, setProgress] = useState(0);
+
+  // progress function
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        const nextProgress = prevProgress >= 100 ? 100 : prevProgress + 1;
+        if (nextProgress === 100) {
+          clearInterval(interval);
+        }
+        return nextProgress;
+      });
+    }, 40);
+
+    return () => clearInterval(interval);
+  })
+
+  // message change function
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className={styles.body}>
+      <div className={styles.window}>
+        <div className={styles.title_bar}>
+          <div className={styles.title}>
+            NOTIFICATION
+          </div>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <div className={styles.content}>
+          <div className={styles.container}>
+            <div>
+              <Message />
+            </div>
+          </div>
+        </div>
+        <div className={styles.loading_bar}>
+              <motion.div
+                className={styles.progress}
+                style={{ width: `${progress}%` }}
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 1.0 }}
+              />
+              <div className={styles.counter}>{`${progress}%`}</div>
+        </div>
       </div>
     </main>
   );
+};
+
+export default function Home(){
+  const [loading, setLoading] = useState(true);
+  const text = "You have risked you life in the lowliest of dungeons and being the world weakest. This secret quest is for you to train and raise your level to rise to the world strongest!".split(" ");
+
+  // set a timeout to simulate loading for 5 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 6000);
+  }, []);
+
+  // show the loader while loading 
+  // if loading is false, show the content
+  if (loading) {
+    return (
+      <>
+        <WindowsLoader />
+      </>
+    )
+  }
+
+  return (
+    <div className={styles.body}>
+      <div className={styles.blog}>
+        <h1 className={styles.header}>
+          Welcome Player
+        </h1>
+        {text.map((el, i) => (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              delay: i / 10,
+            }}
+            key={i}
+          >
+            {el}{" "}
+          </motion.span>
+        ))}
+
+        <div className={styles.footer}>
+          <text>
+            © Kean Teng 2024 &nbsp;
+          </text>
+          <a className={styles.link} href="https://github.com/keanteng/nextjs-blog">
+          Github
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+function Message() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+  }, []);
+
+  // show the loader while loading 
+  // if loading is false, show the content
+  if (loading) {
+    return (
+      <div className={styles.message}>
+        [YOU HAVE SATISFIED ALL THE CONDITIONS NECESSARY FOR COMPLETING THE SECRET QUEST.
+        <text className={styles.key_message}> 'COURAGE OF THE WEAK'</text>
+        ]
+      </div>
+    ) 
+  }
+
+  return (
+    <div className={styles.message}>
+    [YOU HAVE OBTAINED THE RIGHT TO BECOME A <text className={styles.key_message}>'PLAYER'</text>.]
+    </div>
+  )
 }
