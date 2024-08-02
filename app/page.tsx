@@ -102,7 +102,7 @@ export default function Home(){
           <text>
             © Kean Teng 2024 &nbsp;
           </text>
-          <a className={styles.link} href="https://github.com/keanteng/nextjs-blog">
+          <a className={styles.link} href="https://github.com/keanteng/nextjs-solo-leveling">
           Github
           </a>
         </div>
